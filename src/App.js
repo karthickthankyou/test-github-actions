@@ -6,6 +6,8 @@ function App() {
       This is awesome!
       <br />
       This deploy happened through github actions!
+      <br />
+      This deployment includes 4 deployements! 2 -web: 2- storybook
     </div>
   )
 }

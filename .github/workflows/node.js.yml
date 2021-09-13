@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
   pull_request:
-    branches: [main]
+    branches: [main, develop]
 
 jobs:
   build:
@@ -21,6 +21,12 @@ jobs:
           node-version: '14.x'
           cache: 'npm'
       - run: npm ci
+      - if: (github.event_name == 'push' || github.event_name == 'pull_request') && github.ref == 'refs/heads/main'
+        name: Conditional branch for main
+        run: echo 'This is main branch'
+      - if: (github.event_name == 'push' || github.event_name == 'pull_request') && github.ref == 'refs/heads/develop'
+        name: Conditional branch for develop
+        run: echo 'This is develop branch'
       - run: npm run validate
       - run: npm test
       - run: npm run test:e2e

@@ -20,6 +20,13 @@ jobs:
         with:
           node-version: '14.x'
           cache: 'npm'
+      - name: Display variables
+        run: |
+          echo "Hello action started!"
+          echo "github.event_name: ${{ github.event_name }}!"
+          echo "github.ref: ${{ github.ref }}!"
+          echo "Hello ${{ github.event.inputs.name }}!"
+          echo "- in ${{ github.event.inputs.home }}!"
       - run: npm ci
       - if: (github.event_name == 'push' || github.event_name == 'pull_request') && github.ref == 'refs/heads/main'
         name: Conditional branch for main

@@ -16,7 +16,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "validate": "echo \"Running validation\" && exit 0"
+    "validate": "echo \"Running validation\" && exit 0",
+    "test:e2e": "echo \"Running test:e2e\" && exit 0"
   },
   "eslintConfig": {
     "extends": [

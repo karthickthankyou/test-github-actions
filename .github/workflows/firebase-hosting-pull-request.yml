@@ -12,6 +12,7 @@ jobs:
       - run: npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
+          target: 'epicgames-dev-iamkarthick'
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TEST_PROJECT_GITHUB_ACTIONS }}'
           projectId: test-project-github-actions

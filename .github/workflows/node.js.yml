@@ -26,13 +26,43 @@ jobs:
           echo "github.event_name: ${{ github.event_name }}!"
           echo "github.ref: ${{ github.ref }}!"
       - run: npm ci
-      - if: (github.event_name == 'push') && github.ref == 'refs/heads/main'
-        name: Conditional branch for main
-        run: echo 'This is main branch'
-      - if: (github.event_name == 'push') && github.ref == 'refs/heads/develop'
-        name: Conditional branch for develop
-        run: echo 'This is develop branch'
       - run: npm run validate
       - run: npm test
       - run: npm run test:e2e
-      - run: npm run build --if-present
+      - run: npm run build
+      - run: npm run build-storybook
+      - if: (github.event_name == 'push') && github.ref == 'refs/heads/main'
+        name: Deploy production
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          target: 'test-project-github-actions'
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TEST_PROJECT_GITHUB_ACTIONS }}'
+          channelId: live
+          projectId: test-project-github-actions
+      - if: (github.event_name == 'push') && github.ref == 'refs/heads/main'
+        name: Deploy production storybook
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          target: 'sb-epicgames-iamkarthick'
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TEST_PROJECT_GITHUB_ACTIONS }}'
+          channelId: live
+          projectId: test-project-github-actions
+      - if: (github.event_name == 'push') && github.ref == 'refs/heads/main'
+        name: Deploy development
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          target: 'epicgames-dev-iamkarthick'
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TEST_PROJECT_GITHUB_ACTIONS }}'
+          channelId: live
+          projectId: test-project-github-actions
+      - if: (github.event_name == 'push') && github.ref == 'refs/heads/develop'
+        name: Deploy development storybook
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          target: 'sb-epicgames-dev-iamkarthick'
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TEST_PROJECT_GITHUB_ACTIONS }}'
+          projectId: test-project-github-actions

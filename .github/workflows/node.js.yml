@@ -47,16 +47,16 @@ jobs:
           target: 'sb-epicgames-iamkarthick'
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TEST_PROJECT_GITHUB_ACTIONS }}'
-          channelId: live
+          channelId: live-sb
           projectId: test-project-github-actions
-      - if: (github.event_name == 'push') && github.ref == 'refs/heads/main'
+      - if: (github.event_name == 'push') && github.ref == 'refs/heads/develop'
         name: Deploy development
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           target: 'epicgames-dev-iamkarthick'
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TEST_PROJECT_GITHUB_ACTIONS }}'
-          channelId: live
+          channelId: dev
           projectId: test-project-github-actions
       - if: (github.event_name == 'push') && github.ref == 'refs/heads/develop'
         name: Deploy development storybook
@@ -65,4 +65,5 @@ jobs:
           target: 'sb-epicgames-dev-iamkarthick'
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TEST_PROJECT_GITHUB_ACTIONS }}'
+          channelId: dev-sb
           projectId: test-project-github-actions
